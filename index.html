@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GG's Portfolio</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ================= RESET & BASE ================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-light: #dce6f1;
+      /* light grey page background */
+      --bg-dark: #172b4d;
+      /* deep grey for nav and footer */
+      --text-dark: #172b4d;
+      --text-light: #ffffff;
+      --border: #aabbd0;
+      --gap: 24px;
+      --blue-hover: #dce6f1;
+      --blue-outline: #365f91;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      /* smooth jump to sections */
+      scroll-padding-top: 90px;
+      /* stops the fixed nav from covering section titles */
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* ================= NAV BAR ================= */
+    .navbar {
+      position: fixed;
+      /* stays visible while scrolling */
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      /* name far left, links far right */
+      align-items: center;
+      padding: 18px 40px;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+      /* faint black rule */
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      font-size: 1rem;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      border-bottom-color: var(--text-light);
+    }
+
+    /* ================= SECTIONS (all centred) ================= */
+    .section {
+      margin: 0;
+      padding: 140px max(70px, calc((100% - 1000px) / 2)) 100px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .home {
+      min-height: 100vh;
+      justify-content: center;
+      padding-top: 140px;
+    }
+
+    .big-title {
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      font-size: 2rem;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+
+    .bio {
+      max-width: 600px;
+      margin-top: 24px;
+      font-size: 1.1rem;
+    }
+
+    .section-text {
+      font-size: 1.2rem;
+      margin-top: 12px;
+    }
+
+    .hero-buttons {
+      margin-top: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    /* ================= WHITE BOXES (tools & skills) ================= */
+    .box {
+      background-color: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 28px 20px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      transition: background-color 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .box:hover {
+      background-color: #dce6f1;
+      border-color: #365F91;
+    }
+
+    /* Tools: 2 per row, last one centred */
+    .box-grid {
+      width: 100%;
+      max-width: 640px;
+      margin-top: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      /* centres the lone box on the last row */
+      gap: var(--gap);
+    }
+
+    .box-grid .box {
+      width: calc(50% - (var(--gap) / 2));
+    }
+
+    /* Skills: 3 on one row */
+    .box-row {
+      width: 100%;
+      max-width: 800px;
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: var(--gap);
+    }
+
+    .box-row .box {
+      flex: 1;
+    }
+
+    /* ================= PROJECTS ================= */
+    #projects .section-text {
+    color: #ffffff;
+}
+    #projects {
+      background-color: #172b4d;
+      max-width: 100%;
+    }
+
+    #projects h2 {
+      color: #ffffff;
+    }
+
+    .projects-grid {
+      width: 100%;
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* 2 per row */
+      gap: var(--gap);
+    }
+
+    .project-card {
+      background-color: #dce6f1;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .project-card img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      height: auto;
+      object-fit: cover;
+      display: block;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .project-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+
+    .project-body h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    .project-desc {
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    .project-buttons {
+      margin-top: auto;
+      /* keeps buttons at the bottom of every card */
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* ================= BUTTONS ================= */
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      border: 2px solid var(--bg-dark);
+      border-radius: 5px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      background-color: var(--blue-hover);
+      color: var(--bg-dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--bg-dark);
+    }
+
+    .btn-outline:hover,
+    .btn-outline:focus-visible {
+      background-color: var(--blue-outline);
+      color: var(--text-light);
+    }
+
+    /* ================= CONTACT ================= */
+    .contact-grid {
+      width: 100%;
+      max-width: 700px;
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* 2 per row */
+      gap: var(--gap);
+    }
+
+    .contact-box {
+      background-color: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 28px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .contact-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .contact-box i {
+      font-size: 2.2rem;
+      color: #172b4d;
+    }
+
+    .contact-box h3 {
+      font-size: 1.15rem;
+    }
+
+    .contact-box a {
+      font-size: 0.95rem;
+      word-break: break-all;
+    }
+
+    .contact-box a:hover {
+      text-decoration: underline;
+    }
+
+    .back-to-top {
+      margin-top: 48px;
+    }
+
+    /* ================= FOOTER ================= */
+    .footer {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      text-align: center;
+      padding: 24px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    /* Tablets */
+    @media (max-width: 900px) {
+      .big-title {
+        font-size: 3rem;
+      }
+
+      .subtitle {
+        font-size: 1.6rem;
+      }
+    }
+
+    /* Phones */
+    @media (max-width: 700px) {
+      html {
+        scroll-padding-top: 120px;
+        /* nav is taller on phones */
+      }
+
+      .navbar {
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px 16px;
+      }
+
+      .logo {
+        font-size: 1.15rem;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 18px;
+      }
+
+      .nav-links a {
+        font-size: 0.9rem;
+      }
+
+      .section {
+        padding: 40px 16px 70px;
+      }
+
+      .home {
+        padding-top: 140px;
+      }
+
+      .big-title {
+        font-size: 2.3rem;
+      }
+
+      .subtitle {
+        font-size: 1.3rem;
+      }
+
+      .bio,
+      .section-text {
+        font-size: 1rem;
+      }
+
+      /* projects become 1 per row */
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .box-row {
+        gap: 12px;
+      }
+
+      .box {
+        padding: 20px 8px;
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Small phones */
+    @media (max-width: 420px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        /* contact boxes stack so links fit */
+      }
+
+      .box-grid,
+      .box-row {
+        gap: 10px;
+      }
+
+      .box-grid .box {
+        width: calc(50% - 5px);
+      }
+    }
+
+    @keyframes zoom-in {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .section:not(.home) {
+      animation: zoom-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ================= NAV BAR ================= -->
+  <header class="navbar">
+    <a href="#home" class="logo">Great-Grace Umesi</a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ================= HOME ================= -->
+    <section id="home" class="section home">
+      <h1 class="big-title">Great-Grace Umesi</h1>
+      <h2 class="subtitle">Frontend Developer</h2>
+      <p class="bio">
+        <b>Hello there!</b> I'm a budding frontend developer passionate about creating clean, responsive, and
+        user-friendly web applications.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#projects" class="btn">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Contact Me</a>
+      </div>
+
+    </section>
+
+
+    <!-- ================= TOOLS ================= -->
+    <section id="tools" class="section">
+      <h2 class="big-title">Tools</h2>
+      <p class="section-text">Tools and technologies I work with</p>
+
+      <div class="box-grid">
+        <div class="box">HTML</div>
+        <div class="box">CSS</div>
+        <div class="box">JavaScript</div>
+        <div class="box">Figma</div>
+        <div class="box">Bootstrap</div>
+        <div class="box">Git & GitHub</div>
+      </div>
+    </section>
+
+    <!-- ================= SKILLS ================= -->
+    <section id="skills" class="section">
+      <h2 class="big-title">Skills</h2>
+
+      <div class="box-row">
+        <div class="box">Responsive Web Design</div>
+        <div class="box">UX/UI</div>
+        <div class="box">Version Control</div>
+      </div>
+    </section>
+
+    <!-- ================= PROJECTS ================= -->
+    <section id="projects" class="section">
+      <h2 class="big-title">Projects</h2>
+      <p class="section-text project-section-text">A selection of projects showcasing my skills in web development and creating interactive user experiences.</p>
+
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <article class="project-card">
+          <img src="images/project1.png" alt="Screenshot of Project 1">
+          <div class="project-body">
+            <h3>Restaurant Website</h3>
+            <p class="project-desc">A responsive restaurant website featuring an interactive menu, shopping cart, and a clean, user-friendly design.</p>
+            <div class="project-buttons">
+              <a href="#" class="btn" target="_blank" rel="noopener">Live Demo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card">
+          <img src="images/project2.png" alt="Screenshot of Project 2">
+          <div class="project-body">
+            <h3>Rock Paper Scissors Game</h3>
+            <p class="project-desc">A Rock Paper Scissors game with dynamic gameplay, player choices, and score tracking.</p>
+            <div class="project-buttons">
+              <a href="#" class="btn" target="_blank" rel="noopener">Live Demo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card">
+          <img src="images/project3.png" alt="Screenshot of Project 3">
+          <div class="project-body">
+            <h3>Project 3 Title</h3>
+            <p class="project-desc">A password generator with customizable length and character types, featuring real-time password strength assessment.</p>
+            <div class="project-buttons">
+              <a href="#" class="btn" target="_blank" rel="noopener">Live Demo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project-card">
+          <img src="images/project4.png" alt="Screenshot of Project 4">
+          <div class="project-body">
+            <h3>Project 4 Title</h3>
+            <p class="project-desc">An event registration site featuring form validation, a live spots-left counter, saved registrations and a confirmation with a unique booking code.</p>
+            <div class="project-buttons">
+              <a href="#" class="btn" target="_blank" rel="noopener">Live Demo</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section id="contact" class="section">
+      <h2 class="big-title">Get in touch</h2>
+      <p class="bio">
+        Have a project in mind or an opportunity to discuss? I'd love to connect, collaborate, and hear from you.
+      </p>
+
+      <div class="contact-grid">
+        <div class="contact-box">
+          <i class="fa-solid fa-envelope"></i>
+          <h3>Email</h3>
+          <a href="mailto:greatgraceumesi@gmail.com">greatgraceumesi@gmail.com</a>
+        </div>
+
+        <div class="contact-box">
+          <i class="fa-brands fa-linkedin"></i>
+          <h3>LinkedIn</h3>
+          <a href="https://www.linkedin.com/in/ggumesi" target="_blank" rel="noopener">linkedin.com/in/ggumesi</a>
+        </div>
+
+        <div class="contact-box">
+          <i class="fa-brands fa-github"></i>
+          <h3>GitHub</h3>
+          <a href="https://github.com/Git-With-GG" target="_blank" rel="noopener">github.com/Git-With-GG</a>
+        </div>
+
+        <div class="contact-box">
+          <i class="fa-brands fa-x-twitter"></i>
+          <br>
+          <a href="https://x.com/ggthecoder" target="_blank" rel="noopener">x.com/ggthecoder</a>
+        </div>
+      </div>
+
+      <a href="#home" class="btn back-to-top">Back to top</a>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    &copy; 2026 Great-Grace Umesi. &nbsp;&nbsp;&nbsp; Designed and developed by GG
+  </footer>
+
+</body>
+
+</html>
